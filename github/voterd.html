@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Responsive Registration Form | CodingLab </title>
+    <link rel="stylesheet" href="style1.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="container">
+    <div action="" id="VoterForm">
+    <div class="title">Voter Registration</div>
+    <div class="content">
+      <form action="#">
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">First Name</span>
+            <input type="text" id="firstname" placeholder="Enter Voter's First name" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Last Name</span>
+            <input type="text" id="Lastname" placeholder="Enter Voter's Last name" required>
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            <input type="text" id="emailid"  placeholder="Enter Voter's email" required>
+          </div>
+          <div class="input-box">
+            <span class="details">User ID</span>
+            <input type="text" id="ID" placeholder="Enter Voter ID" required>
+          </div>
+          <div class="input-box">
+            <span class="Password">Password</span>
+            <input type="text" id="Password" placeholder="Enter the Password" >
+          </div>
+          <div class="input-box">
+            <span class="details">Aadhar Number</span>
+            <input type="text" id="Aadhar" placeholder="Confirm your Aadhar Number" required>
+          </div>
+        </div>
+        <div class="gender-details">
+          <input type="radio" name="gender" id="dot-1">
+          <input type="radio" name="gender" id="dot-2">
+          <input type="radio" name="gender" id="dot-3">
+          <span class="gender-title">Gender</span>
+          <div class="category">
+            <label for="dot-1">
+            <span class="dot one"></span>
+            <span class="gender">Male</span>
+          </label>
+          <label for="dot-2">
+            <span class="dot two"></span>
+            <span class="gender">Female</span>
+          </label>
+          <label for="dot-3">
+            <span class="dot three"></span>
+            <span class="gender">Prefer not to say</span>
+            </label>
+          </div>
+        </div>
+        <div>
+            <button id="button" value="Go back!" onclick="history.back()">Go Back</button>
+          <button id="submit">SUBMIT</button>
+          </a>
+          </div>
+      </form>
+    </div>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBvJu--RbhF3_CtadluqqQANNMm9IGhyBg",
+          authDomain: "regifter-3df6f.firebaseapp.com",
+          projectId: "regifter-3df6f",
+          storageBucket: "regifter-3df6f.appspot.com",
+          messagingSenderId: "748955882802",
+          appId: "1:748955882802:web:9c1f286f688175b56a732b"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        import {getDatabase, ref ,remove, get, update, set, child}
+        from     "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"
+
+        const db= getDatabase();
+
+        var firstname = document.querySelector("#firstname");
+        var lasttname = document.querySelector("#lastname");
+        var emailid = document.querySelector("#emailid");
+        var Voterid = document.querySelector("#ID");
+        var Password= document.querySelector("#Password")
+        var Aadhar = document.querySelector("#Aadhar");
+
+        var submitbtm= document.querySelector("#submit");
+
+
+        function insertdata(){
+            set(ref(db,"Voters/" +ID.value),{
+                firstname : firstname.value,
+                lastname  : Lastname.value,
+                ID        : ID.value,
+                emailid   : emailid.value,
+                Aadhar    : Aadhar.value,
+                Password  : Password.value
+            })
+            .then(()=>{
+                alert("data added")
+            })
+            .catch((error)=>{
+                alert(error)
+            });
+            
+
+       }
+        
+        submitbtm.addEventListener("click",insertdata);
+        </script>
+    </script>
+
+</body>
+</html>
