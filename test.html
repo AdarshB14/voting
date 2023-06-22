@@ -9,7 +9,8 @@
 
     <script type="module">
       // Import the functions you need from the SDKs you need
-      const url = "https://happy-forks-drive.loca.lt"
+      //const url = "https://happy-forks-drive.loca.lt"
+      let url
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
       import { getDatabase, ref, get,set,update } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
@@ -28,10 +29,21 @@
       const app = initializeApp(firebaseConfig);
       const db = getDatabase();
       //Set Contract Address
+      async function geturl(){
+        const dataRef2 = ref(db, 'Election/Contract/');
+        try {
+          const snapshot2 = await get(dataRef2);
+          const data2 = snapshot2.val();
+          console.log(data2.Url)
+          return (data2.Url);
+        } catch (error) {
+          console.error(error);
+        }
+      }
       async function setData(address1,acc) {
         const dataRef = ref(db, 'Election/Contract');
         try {
-          await set(dataRef, {
+          await update(dataRef, {
             ContractAddress: address1,
             Account: acc
           });
@@ -68,6 +80,11 @@
         } catch (error) {
           console.error('Failed to retrieve candidates data:', error);
         }
+      });
+      document.addEventListener('DOMContentLoaded', () => {
+         url = geturl();
+         console.log(url)
+      // Perform operations with the retrieved URL
       });
     </script>
   </body>
