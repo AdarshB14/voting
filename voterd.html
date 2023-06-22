@@ -67,6 +67,7 @@
       </form>
     </div>
     </div>
+  </div>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
@@ -92,20 +93,20 @@
         const db= getDatabase();
 
         var firstname = document.querySelector("#firstname");
-        var lasttname = document.querySelector("#lastname");
-        var emailid = document.querySelector("#emailid");
+        var lastname = document.querySelector("#Lastname");
         var Voterid = document.querySelector("#ID");
+         var emailid = document.querySelector("#emailid");
         var Password= document.querySelector("#Password")
         var Aadhar = document.querySelector("#Aadhar");
 
         var submitbtm= document.querySelector("#submit");
+        var authbtm= document.querySelector("#authenticate");
 
 
         function insertdata(){
             set(ref(db,"Election/Voters/" +ID.value),{
-                ID.preventDefault();
                 firstname : firstname.value,
-                lastname  : Lastname.value,
+                lastname  : lastname.value,
                 ID        : ID.value,
                 emailid   : emailid.value,
                 Aadhar    : Aadhar.value,
@@ -122,6 +123,9 @@
        }
         
         submitbtm.addEventListener("click",insertdata);
+
+       
+
         </script>
     </script>
 
