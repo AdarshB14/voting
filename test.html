@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Deploy Test</title>
+  </head>
+  <body>
+    <button id="Deploy">Deploy</button>
+    <div id="data-container"></div>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      const url = "https://happy-forks-drive.loca.lt"
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+      import { getDatabase, ref, get,set,update } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBvJu--RbhF3_CtadluqqQANNMm9IGhyBg",
+        authDomain: "regifter-3df6f.firebaseapp.com",
+        databaseURL: "https://regifter-3df6f-default-rtdb.firebaseio.com",
+        projectId: "regifter-3df6f",
+        storageBucket: "regifter-3df6f.appspot.com",
+        messagingSenderId: "748955882802",
+        appId: "1:748955882802:web:9c1f286f688175b56a732b"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase();
+      //Set Contract Address
+      async function setData(address1,acc) {
+        const dataRef = ref(db, 'Election/Contract');
+        try {
+          await set(dataRef, {
+            ContractAddress: address1,
+            Account: acc
+          });
+          console.log('Data stored successfully');
+        } catch (error) {
+          console.error('Failed to store data:', error);
+        }
+      }
+      //Deploy API Call
+      const deployContract = async () => {
+        try {
+          const response = await fetch(`${url}/deploy`,{
+            method: 'GET'
+          });
+          const data = await response.json();
+          if (response.ok) {
+            console.log('Deployed');
+            return { address: data.deployedAddress, acc: data.accounts1 }
+          } else {
+            console.error('Failed to Sent', response.status);
+          }
+        } catch (error) {
+          console.error('Failed to Sent', error);
+        }
+      };
+
+      document.getElementById('Deploy').addEventListener("click", async () => {
+        try {
+          const {address,acc} = await deployContract();
+          console.log(address);
+          console.log(acc);
+          setData(address,acc)
+          //displayData(data);
+        } catch (error) {
+          console.error('Failed to retrieve candidates data:', error);
+        }
+      });
+    </script>
+  </body>
+</html>
