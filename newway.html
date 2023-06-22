@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <style>
+    /* CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .login-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .login-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <script type="module">
+    // Firebase configuration
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvJu--RbhF3_CtadluqqQANNMm9IGhyBg",
+      authDomain: "regifter-3df6f.firebaseapp.com",
+      databaseURL: "https://regifter-3df6f-default-rtdb.firebaseio.com",
+      projectId: "regifter-3df6f",
+      storageBucket: "regifter-3df6f.appspot.com",
+      messagingSenderId: "748955882802",
+      appId: "1:748955882802:web:9c1f286f688175b56a732b"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+
+    // Function to handle login
+    function login() {
+      const userId = document.getElementById("userid").value;
+      const password = document.getElementById("password").value;
+
+      console.log("Entered password:", password);
+
+      if (userId.trim() === "") {
+        alert("Please enter a User ID");
+        return;
+      }
+
+      // Reference to the Election/Voters node in Firebase Realtime Database
+      const votersRef = ref(db, "Election/Voters");
+
+      get(child(votersRef, userId))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            console.log("password",userData.Password);
+            if (userData.Password === password) {
+              // User is authenticated, perform login logic here
+              alert("Logged in successfully");
+              window.location.href = "votingpage.html";
+            } else {
+              alert("Incorrect password");
+            }
+          } else {
+            alert("User not found");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
+    // Add click event listener to the login button
+    const loginButton = document.querySelector(".login-button");
+    loginButton.addEventListener("click", login);
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+    <input type="text" id="userid" name="userid" placeholder="User ID" required>
+    <input type="password" id="password" name="password" placeholder="Password" required>
+    <button class="login-button">Login</button>
+  </div>
+</body>
+</html>
+
