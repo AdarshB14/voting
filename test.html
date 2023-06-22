@@ -60,6 +60,7 @@
 
       document.getElementById('Deploy').addEventListener("click", async () => {
         try {
+          console.log(url)
           const {address,acc} = await deployContract();
           console.log(address);
           console.log(acc);
