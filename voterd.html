@@ -103,6 +103,7 @@
 
         function insertdata(){
             set(ref(db,"Election/Voters/" +ID.value),{
+                ID.preventDefault();
                 firstname : firstname.value,
                 lastname  : Lastname.value,
                 ID        : ID.value,
